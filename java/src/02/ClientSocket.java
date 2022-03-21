@@ -18,7 +18,6 @@ public class ClientSocket {
             Scanner scanner=new Scanner(System.in);
             System.out.println("请输入");
             printStream.println(scanner.nextLine());
-            printStream.flush();
         }
     }
 }
