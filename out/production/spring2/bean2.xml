@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+                            ">
+
+<!--    使用配置文件创建对象-->
+    <bean id="book" class="pojo1.Book"></bean>
+    <bean id="bookProxy" class="pojo1.BookProxy"></bean>
+
+    <aop:config>
+<!--        设置切入点：即要增强的是哪一个方法（类）-->
+        <aop:pointcut id="p" expression="execution(* pojo1.Book.print(..))"/>
+<!--        配置切面：即是哪一个类实现了增强的方法-->
+        <aop:aspect ref="bookProxy">
+<!--            配置是哪种增强方式，以及为谁增强-->
+            <aop:before method="before" pointcut-ref="p"></aop:before>
+        </aop:aspect>
+    </aop:config>
+</beans>

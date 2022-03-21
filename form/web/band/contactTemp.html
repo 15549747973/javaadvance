@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>contactTemp</title>
+</head>
+<body>
+
+<form method="post" action="http://localhost:8080/form/formSubmit?action=formSubmit">
+    <fieldset>
+        <!-- label的for需和input的id一致 -->
+        <p>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required="required" />
+        </p>
+        <p>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Your email address" required="required" />
+        </p>
+        <p>
+            <label for="message">Message:</label>
+            <textarea cols="45" rows="7" id="message" name="message" required="required"
+                      placeholder="Write your message here."></textarea>
+        </p>
+        <input type="submit" value="Send" />
+    </fieldset>
+</form>
+</body>
+</html>

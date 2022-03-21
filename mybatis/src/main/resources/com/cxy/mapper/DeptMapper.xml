@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cxy.mapper.DeptMapper">
+    <select id="queryDeptById" resultType="Dept">
+        select * from dept where dept_id = #{id}
+    </select>
+
+    <resultMap id="deptAndStaff" type="DeptTemp">
+        <id property="deptId" column="dept_id"></id>
+        <result property="deptName" column="dept_name"></result>
+        <collection property="staffList" ofType="Staff">
+            <id property="staffId" column="staff_id"></id>
+            <result property="staffName" column="staff_name"></result>
+            <result property="staffEmail" column="staff_email"></result>
+        </collection>
+
+    </resultMap>
+    <select id="queryDeptAndStaff" resultMap="deptAndStaff">
+        select * from dept left join staff on dept.dept_id=staff.dept_id where dept.dept_id=#{id}
+    </select>
+
+
+    <resultMap id="deptAndStaffTwo" type="DeptTemp">
+        <id property="deptId" column="dept_id"></id>
+        <result property="deptName" column="dept_name"></result>
+        <collection property="staffList"
+                    select="com.cxy.mapper.StaffMapper.queryStaffByDeptId"
+                    column="dept_id"></collection>
+    </resultMap>
+    <select id="queryDeptAndStaffTwo" resultMap="deptAndStaffTwo">
+        select * from dept where dept_id=#{id}
+    </select>
+</mapper>

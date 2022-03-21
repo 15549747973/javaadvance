@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cxy.mapper.StaffMapper">
+    <insert id="addStaff">
+        insert into staff values (#{staffId},#{staffName},#{staffEmail},#{deptId})
+    </insert>
+
+
+    <resultMap id="resultmap" type="Staff">
+        <result property="staffId" column="staff_id"></result>
+        <result property="staffName" column="staff_name"></result>
+        <result property="staffEmail" column="staff_email"></result>
+        <result property="deptId" column="dept_id"></result>
+    </resultMap>
+    <select id="queryStaffById" resultMap="resultmap">
+        select * from staff where staff_id = #{id}
+    </select>
+
+
+    <resultMap id="staffAndDept" type="StaffTemp">
+        <id property="staffId" column="staff_id"></id>
+        <result property="staffName" column="staff_name"></result>
+        <result property="staffEmail" column="staff_email"></result>
+        <association property="dept" javaType="Dept">
+            <id property="deptId" column="dept_id"></id>
+            <result property="deptName" column="dept_name"></result>
+        </association>
+    </resultMap>
+    <select id="queryStaffAndDept" resultMap="staffAndDept">
+        select * from staff left join dept on staff.dept_id=dept.dept_id where staff.staff_id = #{id}
+    </select>
+
+
+
+    <resultMap id="staffAndDeptTwo" type="staffTemp">
+        <id property="staffId" column="staff_id"></id>
+        <result property="staffName" column="staff_name"></result>
+        <result property="staffEmail" column="staff_email"></result>
+        <association property="dept"
+                     select="com.cxy.mapper.DeptMapper.queryDeptById"
+                     column="dept_id"></association>
+    </resultMap>
+    <select id="queryStaffTwo" resultMap="staffAndDeptTwo">
+        select * from staff where staff_id=#{id}
+    </select>
+
+
+    <select id="queryStaffByDeptId" resultType="Staff">
+        select * from staff where dept_id=#{id}
+    </select>
+</mapper>
