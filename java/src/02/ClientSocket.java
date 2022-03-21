@@ -4,5 +4,6 @@
  */
 public class ClientSocket {
     public static void main(String[] args)throws Exception {
+        int i=0;
     }
 }
